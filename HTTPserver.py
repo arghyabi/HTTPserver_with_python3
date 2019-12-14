@@ -149,6 +149,8 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			else:
 				return self.list_directory(path)
 		ctype = self.guess_type(path)
+		if path[-14:] == 'Data_directory':
+			path = path[:-15]
 		try:
 			# Always read in binary mode. Opening files in text mode may cause
 			# newline translations, making the actual size of the content
@@ -190,6 +192,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		f.write(b"<input name=\"file\" type=\"file\"/>")
 		f.write(b"<input type=\"submit\" value=\"upload\"/></form>\n")
 		f.write(b"<hr>\n<ul>\n")
+		print("Path : ",path)
 		for name in list:
 			fullname = os.path.join(path, name)
 			displayname = linkname = name
@@ -201,7 +204,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 				displayname = name + "@"
 				# Note: a link to a directory displays with @ and links with /
 			f.write(('<li><a href="%s">%s</a>\n'
-					% (urllib.parse.quote(linkname), html.escape(displayname))).encode())
+					% (urllib.parse.quote('Data_directory/'+linkname), html.escape(displayname))).encode())
 		f.write(b"</ul>\n<hr>\n</body>\n</html>\n")
 		length = f.tell()
 		f.seek(0)
