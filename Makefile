@@ -1,7 +1,6 @@
 all: run
 
 run: HTTPserver.py
-	@mkdir -p Data_directory
 	@python3 HTTPserver.py
 
 build: HTTPserver.py

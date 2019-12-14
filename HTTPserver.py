@@ -19,6 +19,7 @@ import re
 from io import BytesIO
 import html
 
+Data_directory = "Data_directory"
 
 class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
@@ -231,7 +232,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			head, word = os.path.split(word)
 			if word in (os.curdir, os.pardir): continue
 			path = os.path.join(path, word)
-		path = os.path.join(path, "Data_directory")
+		path = os.path.join(path, Data_directory)
 		return path
 
 
@@ -288,6 +289,8 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
 def test(HandlerClass = SimpleHTTPRequestHandler, ServerClass = http.server.HTTPServer):
+	if not os.path.exists(Data_directory):
+		os.makedirs(Data_directory)
 	ip = os.popen("hostname -I | awk '{print $1}'").read().strip()
 	print("Serving HTTP on " + str(ip) + " port 8000 (http://" +str(ip)+ ":8000) ...")
 	print("or")
