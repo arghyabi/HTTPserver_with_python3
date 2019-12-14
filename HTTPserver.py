@@ -101,7 +101,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			out = open(fn, 'wb')
 		except IOError:
 			return (False, "Can't create file to write, do you have permission to write?")
-				
+
 		preline = self.rfile.readline()
 		remainbytes -= len(preline)
 		while remainbytes > 0:
@@ -231,6 +231,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			head, word = os.path.split(word)
 			if word in (os.curdir, os.pardir): continue
 			path = os.path.join(path, word)
+		path = os.path.join(path, "Data_directory")
 		return path
 
 
